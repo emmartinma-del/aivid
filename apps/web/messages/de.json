@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "features": "Features",
+    "pricing": "Preise",
+    "login": "Anmelden",
+    "signup": "Kostenlos starten"
+  },
+  "hero": {
+    "badge": "NEU – KI-Video-Generator für App Stores",
+    "title": "Mehr Downloads mit professionellen App-Preview-Videos",
+    "subtitle": "Generiere in Minuten ein App-Store-konformes Previewvideo – vollautomatisch per KI. Für iOS App Store und Google Play.",
+    "cta": "Jetzt kostenlos testen",
+    "secondary": "Demo ansehen"
+  },
+  "wizard": {
+    "step1": "App-Infos",
+    "step2": "Assets hochladen",
+    "step3": "Style wählen",
+    "step4": "Store auswählen",
+    "step5": "Video generieren",
+    "next": "Weiter",
+    "back": "Zurück",
+    "generate": "Video generieren"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "projects": "Projekte",
+    "newProject": "Neues Projekt",
+    "noProjects": "Noch keine Projekte. Erstelle dein erstes App-Video!",
+    "status": {
+      "draft": "Entwurf",
+      "generating": "Wird generiert…",
+      "completed": "Fertig",
+      "failed": "Fehlgeschlagen"
+    }
+  },
+  "billing": {
+    "title": "Abonnement",
+    "currentPlan": "Aktueller Plan",
+    "upgrade": "Upgraden",
+    "videosUsed": "{used} von {limit} Videos verwendet"
+  },
+  "errors": {
+    "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "unauthorized": "Bitte melde dich an."
+  }
+}

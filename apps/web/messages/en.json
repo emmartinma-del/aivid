@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "login": "Sign In",
+    "signup": "Start for Free"
+  },
+  "hero": {
+    "badge": "NEW – AI Video Generator for App Stores",
+    "title": "Get More Downloads with Professional App Preview Videos",
+    "subtitle": "Generate App Store-compliant preview videos in minutes — fully automated by AI. For iOS App Store and Google Play.",
+    "cta": "Start for Free",
+    "secondary": "Watch Demo"
+  },
+  "wizard": {
+    "step1": "App Info",
+    "step2": "Upload Assets",
+    "step3": "Choose Style",
+    "step4": "Select Store",
+    "step5": "Generate Video",
+    "next": "Next",
+    "back": "Back",
+    "generate": "Generate Video"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "projects": "Projects",
+    "newProject": "New Project",
+    "noProjects": "No projects yet. Create your first app video!",
+    "status": {
+      "draft": "Draft",
+      "generating": "Generating…",
+      "completed": "Completed",
+      "failed": "Failed"
+    }
+  },
+  "billing": {
+    "title": "Subscription",
+    "currentPlan": "Current Plan",
+    "upgrade": "Upgrade",
+    "videosUsed": "{used} of {limit} videos used"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "unauthorized": "Please sign in."
+  }
+}
