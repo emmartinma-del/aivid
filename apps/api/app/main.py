@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import sentry_sdk
 
 from app.config import settings
-from app.routers import auth, projects, assets, jobs, videos, subscriptions, ws
+from app.routers import auth, projects, assets, jobs, videos, subscriptions, ws, storage
 
 
 @asynccontextmanager
@@ -36,6 +36,7 @@ app.include_router(jobs.router, prefix="/api/v1/jobs", tags=["jobs"])
 app.include_router(videos.router, prefix="/api/v1", tags=["videos"])
 app.include_router(subscriptions.router, prefix="/api/v1/subscriptions", tags=["subscriptions"])
 app.include_router(ws.router, tags=["websocket"])
+app.include_router(storage.router, tags=["storage"])
 
 
 @app.get("/health")

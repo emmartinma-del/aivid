@@ -1,0 +1,13 @@
+#!/bin/bash
+export DATABASE_URL="postgresql+asyncpg://aivid:aivid_dev@localhost:5432/aivid"
+export REDIS_URL="redis://localhost:6379/0"
+export LOCAL_STORAGE_PATH="/home/user/aivid/storage"
+export JWT_SECRET="aivid-dev-jwt-secret-2026-secure-random-key"
+export NEXTAUTH_SECRET="aivid-dev-nextauth-secret-2026-secure"
+export FRONTEND_URL="http://localhost:3000"
+export ENVIRONMENT="development"
+export ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}"
+export STRIPE_SECRET_KEY="${STRIPE_SECRET_KEY:-}"
+export STRIPE_WEBHOOK_SECRET="${STRIPE_WEBHOOK_SECRET:-}"
+export NEXTAUTH_URL="http://localhost:3000"
+export NEXT_PUBLIC_API_URL="http://localhost:8000"

@@ -50,6 +50,9 @@ class Settings(BaseSettings):
     # CORS
     frontend_url: str = "http://localhost:3000"
 
+    # Local filesystem storage (dev mode – replaces S3/MinIO)
+    local_storage_path: str = ""
+
     # Sentry
     sentry_dsn: str = ""
 

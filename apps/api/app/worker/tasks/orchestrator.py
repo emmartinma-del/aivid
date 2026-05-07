@@ -8,7 +8,6 @@ import shutil
 import uuid
 from datetime import datetime, timezone
 
-import boto3
 import redis
 from celery import Task
 from sqlalchemy import create_engine
@@ -28,6 +27,7 @@ from app.worker.tasks.compositor import compose_video
 from app.worker.utils.store_specs import get_primary_spec
 from app.worker.utils.ffmpeg_helpers import validate_output
 from app.worker.utils.watermark import add_watermark
+from app.services.s3 import upload_file_local, download_file_local
 
 # Sync engine for Celery workers (Celery doesn't play well with asyncio)
 _sync_engine = create_engine(
@@ -114,23 +114,16 @@ def generate_video_task(self, job_id: str) -> dict:
         # ── Step 1: Download assets from S3 ────────────────────────────────
         _update_job(session, job, current_step=JobStep.ASSET_PREP, progress_pct=15)
 
-        s3 = boto3.client(
-            "s3",
-            endpoint_url=settings.s3_endpoint_url or None,
-            aws_access_key_id=settings.s3_access_key_id,
-            aws_secret_access_key=settings.s3_secret_access_key,
-        )
-
         ss_paths: list[str] = []
         for idx, ss in enumerate(screenshots[:6]):
             local_path = os.path.join(workdir, f"screenshot_{idx}{os.path.splitext(ss.filename)[1]}")
-            s3.download_file(ss.s3_bucket, ss.s3_key, local_path)
+            download_file_local(ss.s3_bucket, ss.s3_key, local_path)
             ss_paths.append(local_path)
 
         icon_path: str | None = None
         if icon_asset:
             icon_path = os.path.join(workdir, f"icon{os.path.splitext(icon_asset.filename)[1]}")
-            s3.download_file(icon_asset.s3_bucket, icon_asset.s3_key, icon_path)
+            download_file_local(icon_asset.s3_bucket, icon_asset.s3_key, icon_path)
 
         _update_job(session, job, current_step=JobStep.ASSET_PREP, progress_pct=30)
 
@@ -198,12 +191,7 @@ def generate_video_task(self, job_id: str) -> dict:
         _update_job(session, job, current_step=JobStep.FINALIZE, progress_pct=93)
 
         output_key = f"outputs/{project.organization_id}/{project.id}/{job_id}.mp4"
-        s3.upload_file(
-            final_output,
-            settings.s3_outputs_bucket,
-            output_key,
-            ExtraArgs={"ContentType": "video/mp4"},
-        )
+        upload_file_local(final_output, settings.s3_outputs_bucket, output_key, "video/mp4")
 
         file_size = os.path.getsize(final_output)
         cdn_url = f"{settings.s3_public_url}/{settings.s3_outputs_bucket}/{output_key}" if settings.s3_public_url else None

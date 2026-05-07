@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { LayoutDashboard, FolderVideo, CreditCard, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, FileVideo, CreditCard, Settings, LogOut } from "lucide-react";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/projects", label: "Projekte", icon: FolderVideo },
+  { href: "/projects", label: "Projekte", icon: FileVideo },
   { href: "/billing", label: "Abo", icon: CreditCard },
 ];
 
