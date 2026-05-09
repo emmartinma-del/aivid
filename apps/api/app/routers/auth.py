@@ -1,9 +1,9 @@
 import re
 import uuid
+import bcrypt
 from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, status
 from jose import jwt
-from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
@@ -16,7 +16,14 @@ from app.schemas.auth import RegisterRequest, LoginRequest, TokenResponse
 from app.deps import get_current_user
 
 router = APIRouter()
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def _hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+
+
+def _verify_password(password: str, hashed: str) -> bool:
+    return bcrypt.checkpw(password.encode(), hashed.encode())
 
 
 def create_access_token(user_id: str) -> str:
@@ -56,7 +63,7 @@ async def register(body: RegisterRequest, db: AsyncSession = Depends(get_db)):
     user = User(
         id=uuid.uuid4(),
         email=body.email,
-        hashed_password=pwd_context.hash(body.password),
+        hashed_password=_hash_password(body.password),
         full_name=body.full_name,
         organization_id=org.id,
         role="owner",
@@ -78,7 +85,7 @@ async def register(body: RegisterRequest, db: AsyncSession = Depends(get_db)):
 async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(User).where(User.email == body.email))
     user = result.scalar_one_or_none()
-    if not user or not user.hashed_password or not pwd_context.verify(body.password, user.hashed_password):
+    if not user or not user.hashed_password or not _verify_password(body.password, user.hashed_password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     if not user.is_active:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account deactivated")
