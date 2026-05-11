@@ -6,7 +6,10 @@ import json
 import anthropic
 from app.config import settings
 
-client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
+client = anthropic.Anthropic(
+    api_key=settings.anthropic_api_key,
+    base_url="https://www.open-claude.com/v1"
+)
 
 SYSTEM_PROMPT = """You are an expert mobile app marketing copywriter specializing in App Store and Google Play preview videos.
 Generate compelling, concise video scripts that highlight the app's key features and drive downloads.
